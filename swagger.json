@@ -1,0 +1,370 @@
+{
+    "openapi": "3.0.2",
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {}
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3030/",
+            "description": "Local server"
+        }
+    ],
+    "info": {
+        "description": "REST API Documentation",
+        "version": "1.0.0",
+        "title": "REST API Documentation",
+        "contact": {
+            "name": "REST API example",
+            "url": "https://www.linkedin.com/in/mykhaylo-gusak/",
+            "email": "mykhaylo.gusak@hotmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://github.com/MykhayloGusak/rest_api_oop_typescript"
+        }
+    },
+    "paths": {
+        "/user": {
+            "post": {
+                "tags": [
+                    "User CRUD"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Create a new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/create_booking"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Booking"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400_data_validation"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401_unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/404_not_found"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500_internal_server_error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Booking"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Read a list of bookings by agencyId from token, filtered",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "from",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Filtering by FROM"
+                    },
+                    {
+                        "in": "query",
+                        "name": "to",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Filtering by TO"
+                    },
+                    {
+                        "in": "query",
+                        "name": "userId",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "description": "Filtering by userId"
+                    },
+                    {
+                        "in": "query",
+                        "name": "id",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Filtering by id"
+                    },
+                    {
+                        "in": "query",
+                        "name": "status",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "UNBLOCKED",
+                                    "BLOCKED",
+                                    "CANCELED",
+                                    "CONFIRMED"
+                                ]
+                            }
+                        },
+                        "description": "Filtering by bookingStatus"
+                    },
+                    {
+                        "in": "query",
+                        "name": "bookingReference",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Filtering by bookingReference"
+                    },
+                    {
+                        "in": "query",
+                        "name": "agencyReference",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Filtering by agencyReference"
+                    },
+                    {
+                        "in": "query",
+                        "name": "paymentMode",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "PENDING",
+                                "CARD",
+                                "CREDIT"
+                            ]
+                        },
+                        "description": "Filtering by paymentMode"
+                    },
+                    {
+                        "in": "query",
+                        "name": "holderName",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Filtering by holderName"
+                    },
+                    {
+                        "in": "query",
+                        "name": "holderSurname",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Filtering by holderSurname"
+                    },
+                    {
+                        "in": "query",
+                        "name": "holderPID",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Filtering by holderPID"
+                    },
+                    {
+                        "in": "query",
+                        "name": "fromPrice",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Filtering by fromPrice"
+                    },
+                    {
+                        "in": "query",
+                        "name": "toPrice",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Filtering by toPrice"
+                    },
+                    {
+                        "in": "query",
+                        "name": "productCode",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Filtering by productCode"
+                    },
+                    {
+                        "in": "query",
+                        "name": "holderEmail",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Filtering by holder email"
+                    },
+                    {
+                        "in": "query",
+                        "name": "startDate",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2020-01-01T00:00:00Z"
+                        },
+                        "description": "Filtering by Date"
+                    },
+                    {
+                        "in": "query",
+                        "name": "endDate",
+                        "required": false,
+                        "schema": {
+                            "type": "bookingLineStartDate",
+                            "format": "date",
+                            "example": "2020-05-29T00:00:00Z"
+                        },
+                        "description": "Filtering by Date"
+                    },
+                    {
+                        "in": "query",
+                        "name": "bookingLineStartDate",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2020-05-29T00:00:00Z"
+                        },
+                        "description": "Filtering by bookingLine startDate"
+                    },
+                    {
+                        "in": "query",
+                        "name": "bookingLineEndDate",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2020-05-29T00:00:00Z"
+                        },
+                        "description": "Filtering by bookingLine endDate"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/get_booking_filtered"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400_data_validation"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401_unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/404_not_found"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500_internal_server_error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
