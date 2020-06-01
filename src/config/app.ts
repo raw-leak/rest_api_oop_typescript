@@ -7,13 +7,13 @@ import { UserRoutes } from "../User/Routes";
 
 // swagger doc
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument = require("../../swagger.json");
+import swaggerDocument = require("./swagger.json");
 
 class App {
 
     public app: express.Application = express();
     public userRouter: UserRoutes = new UserRoutes();
-    
+
     constructor() {
         this.config();
 
@@ -40,10 +40,10 @@ class App {
 
         // set port
         this.app.set("port", process.env.PORT || 3030);
+        console.log(`Worker ${process.pid} started ${process.env.WORKER_NUM}`);
 
         // swagger documentation
         this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 
     }
 }
