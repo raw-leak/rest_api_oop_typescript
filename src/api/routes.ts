@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { UserRoutes } from "../User/Routes";
+import { UserRoutes } from "../api/components/User/Routes";
 
 export class Routes {
 

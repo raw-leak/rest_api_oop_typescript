@@ -13,6 +13,7 @@ import {
 export class UserController {
   public async createNewUser(req: Request, res: Response) {
     try {
+      console.log("controlelr")
       const newUser = new User(req.body);
       await newUser.save();
       res.status(201).json({ message: 'User Created' });

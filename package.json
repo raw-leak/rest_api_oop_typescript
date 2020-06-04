@@ -7,7 +7,8 @@
     "clean": "rimraf dist",
     "build": "npm run clean&& tsc",
     "start": "npm run build && node ./dist/index",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "dev:d": "node --inspect-brk ./dist/index.js"
   },
   "keywords": [
     "TypeScript",
@@ -28,11 +29,13 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "@types/mongoose": "^5.7.21",
     "@types/morgan": "^1.9.0",
     "@types/supertest": "^2.0.9",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "express-validator": "^6.5.0",
     "mongoose": "^5.9.15",
     "morgan": "^1.10.0",
     "swagger-ui-express": "^4.1.4"
