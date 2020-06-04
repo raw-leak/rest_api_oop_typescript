@@ -1,21 +1,20 @@
 import mongoose, { Schema } from 'mongoose';
 
 const UserSchema = new Schema({
+    username: {
+        type: String
+    },
     firstName: {
-        type: String,
-        required: 'Enter a first name'
+        type: String
     },
     lastName: {
-        type: String,
-        required: 'Enter a first name'
+        type: String
     },
     email: {
-        type: String,
-        required: 'Enter a email'
+        type: String
     },
     password: {
-        type: String,
-        required: 'Enter a password'
+        type: String
     },
     created_date: {
         type: Date,
