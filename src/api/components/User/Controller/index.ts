@@ -4,21 +4,17 @@ import { Request, Response } from 'express';
 import { User } from '../Model';
 
 // Errors
-import {
-  ValidationError,
-  InternalServerError,
-  NotFoundError,
-} from '../../../Errors';
+import { InternalServerError, NotFoundError } from '../../../Errors';
 
 export class UserController {
   public async createNewUser(req: Request, res: Response) {
     try {
-      console.log("controlelr")
-      const newUser = new User(req.body);
-      await newUser.save();
-      res.status(201).json({ message: 'User Created' });
+      const newUser = await new User(req.body).save();
+
+      res.status(201).json({ user: newUser });
     } catch (err) {
-      res.status(500).json({ message: 'Error' });
+      console.log(err);
+      res.status(500).json({ message: err.message });
     }
   }
 
@@ -26,7 +22,7 @@ export class UserController {
     try {
       const { userId } = req.params;
 
-      const user = await User.findById(userId).orFail();
+      const user = await User.findById(userId);
       if (!user) throw new Error(`User with id:${userId} not found`);
 
       res.status(200).json(user);
