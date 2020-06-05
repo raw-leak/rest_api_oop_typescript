@@ -21,17 +21,32 @@ export class UserDataValidation {
 
   private emailRuleValidation: Function = (email) =>
     Joi.object({
-      email: Joi.string().email({
-        minDomainSegments: 2,
-        tlds: { allow: ['com', 'net', 'es', 'org'] },
-      }),
+      email: Joi.string()
+        .email({
+          minDomainSegments: 2,
+          tlds: { allow: ['com', 'net', 'es', 'org'] },
+        })
+        .required(),
     }).validateAsync({ email });
+
+  // Password requirements
+
+  // min 6 characters
+  // max 30 characters
+  // must contain at least 1 uppercase or lowercase letter
+  // must contain at least 1 number
+  // may contain special characters like !@#$%^&*()_+
 
   private passwordRuleValidation: Function = (password, repeat_password) =>
     Joi.object({
       password: Joi.string()
-        .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
-        .required(),
+        .pattern(
+          new RegExp('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d^a-zA-Z0-9].{5,30}$')
+        )
+        .required()
+        .messages({
+          'string.pattern.base': `"password" must be a minimum of 6 characters and must include at least 1 uppercase letter, at least 1 lowercase letter, and at least 1 number`,
+        }),
 
       repeat_password: Joi.valid(Joi.ref('password')).required(),
     }).validateAsync({ password, repeat_password });
